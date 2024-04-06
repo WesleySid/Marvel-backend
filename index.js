@@ -98,6 +98,23 @@ app.get("/comic/:id", async (req, res) => {
   }
 });
 
+app.get("/comics/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/comics/${id}?apiKey=FHmiZnYEhOqgaFA8`
+    );
+
+    const character = response.data;
+    console.log(character);
+    res.json(character);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 app.all("*", (req, res) => {
   console.log("Unknown route");
   return res.status(404).json("ERROR 404");
